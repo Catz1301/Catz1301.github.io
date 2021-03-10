@@ -3,7 +3,7 @@
 		<title>wybpMaker</title>
 		
 		<style>
-			button {
+			/*button {
 				margin-left: 8px;
 				margin-bottom: 16px;
 				margin-right: 8px;
@@ -11,7 +11,7 @@
 				padding-right: 42px;
 				padding-top: 10.5;
 				padding-bottom: 10.5;
-			}
+			}*/
 			
 			.paraEdit {
 				/*height: 40px;
@@ -80,8 +80,13 @@
 			    <textarea id="para4Edit" rows="10" cols="250" class="mdc-text-field__input" name="Para4" placeholder="Extra" required="true" wrap="soft" aria-label="Label"></textarea>
 			  </span>
 			</label>
-			<button type="button" id="submitBtn" name="Submit">Done</button>
-			<button type="button" id="clearBtn" name="Clear" style="display: none;" disabled>Clear</button>
+			<button class="mdc-button mdc-button--raised" id="submitBtn" name="Submit">
+			  <span class="mdc-button__label">Done</span>
+			</button>
+			<button class="mdc-button mdc-button--raised" id="clearBtn" name="Clear" style="display: none;" disabled>
+			  <span class="mdc-button__ripple"></span>
+  			  <span class="mdc-button__label">Outlined Button</span>
+			</button>
 		</form>
 		
 		<script>
