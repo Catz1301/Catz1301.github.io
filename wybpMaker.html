@@ -1,6 +1,25 @@
 <html>
 	<head>
 		<title>wybpMaker</title>
+		
+		<style>
+			button {
+				margin-left: 8px;
+				margin-bottom: 16px;
+				margin-right: 8px;
+				padding-left: 42px;
+				padding-right: 42px;
+				padding-top: 10.5;
+				padding-bottom: 10.5;
+			}
+			
+			.paraEdit {
+				height: 40px;
+				width: 120px;
+				margin-left: 8px;
+				margin-bottom: 16px;
+			}
+		</style>
 	</head>
 	<body>
 		<p>Reminder: You will need 3 paragraphs, with a recommended word count of 100-200 words per paragraph.</p>
@@ -10,12 +29,13 @@
 
 		<form xmlns="http://www.w3.org/1999/xhtml" id="wybpMaker">
 			<input id="titleEdit" name="Title" style="width: 400px; margin-left: 8px; margin-bottom: 16px" required="true" type="text" value="What Ya Been Playing Week " /><br>
-			<textarea id="introEdit" rows="10" cols="250" style="margin-left: 8px; margin-bottom: 16px" name="Intro" placeholder="Introduction (What you played" required="true" wrap="soft"></textarea><br>
-			<textarea id="para3Edit" rows="10" cols="250" style="margin-left: 8px; margin-bottom: 16px" name="Para3" placeholder="Why you played it" required="true" wrap="soft"></textarea><br>
-			<textarea id="para1Edit" rows="10" cols="250" style="margin-left: 8px; margin-bottom: 16px" name="Para1" placeholder="What you liked about it and why)" required="true" wrap="soft"></textarea><br>
-			<textarea id="para2Edit" rows="10" cols="250" style="margin-left: 8px; margin-bottom: 16px" name="Para2" placeholder="What you didn't like about it and why)" required="true" wrap="soft"></textarea><br>
-			<textarea id="para4Edit" rows="10" cols="250" style="margin-left: 8px; margin-bottom: 16px" name="Para4" placeholder="Extra" required="true" wrap="soft"></textarea><br>
-			<button type="button" id="submitBtn" style="height: 40px; width: 120px; margin-left: 8px; margin-bottom: 16px" name="Submit">Done</button>
+			<textarea id="introEdit" rows="10" cols="250" style="paraEdit" name="Intro" placeholder="Introduction (What you played)" required="true" wrap="soft"></textarea><br>
+			<textarea id="para3Edit" rows="10" cols="250" style="paraEdit" name="Para3" placeholder="Why you played it" required="true" wrap="soft"></textarea><br>
+			<textarea id="para1Edit" rows="10" cols="250" style="paraEdit" name="Para1" placeholder="What you liked about it and why" required="true" wrap="soft"></textarea><br>
+			<textarea id="para2Edit" rows="10" cols="250" style="paraEdit" name="Para2" placeholder="What you didn't like about it and why" required="true" wrap="soft"></textarea><br>
+			<textarea id="para4Edit" rows="10" cols="250" style="paraEdit" name="Para4" placeholder="Extra" required="true" wrap="soft"></textarea><br>
+			<button type="button" id="submitBtn" name="Submit">Done</button>
+			<button type="button" id="clearBtn" name="Clear" style="display: none;" disabled>Clear</button>
 		</form>
 		
 		<script>
@@ -27,8 +47,11 @@
 			var para3 = document.getElementById("para3Edit");
 			var para4 = document.getElementById("para4Edit");
 			var submit = document.getElementById("submitBtn");
+			var clearBtn = document.getElementById("clearBtn");
 			submit.onclick = preSubmit;
 			wybpForm.onsubmit = meow();
+			
+			clearBtn.onclick = clearFields();
 			function checkValues() {
 				let validValues = true;
 				if (title.value == "What Ya Been Playing Week ")
@@ -45,11 +68,24 @@
 					validValues = false;
 				return validValues;
 			}
+			
+			function clearFields() {
+				title.value = "";
+				intro.value = "";
+				para1.value = "";
+				para2.value = "";
+				para3.value = "";
+				para4.value = "";
+				clearBtn.style.display = "none";
+				clearBtn.enabled = false;
+			}
+			
 			function meow() {
 				if (checkValues()) {
 					writeDocument(true);
 				}
 			}
+			
 			function preSubmit() {
 				if (title.value != "What Ya Been Playing Week ")
 					meow();
@@ -73,6 +109,7 @@
 					"[SIGNATURE]\\par",
 					"}"
 				];
+				
 				let rtfTitle = rtfTemplate[3].replace("[TITLE]", title.value);
 				let rtfIntro = rtfTemplate[5].replace("[INTRODUCTION]", intro.value);
 				let rtfPara1 = rtfTemplate[6].replace("[PARA1]", para3.value);
@@ -80,14 +117,21 @@
 				let rtfPara3 = rtfTemplate[9].replace("[PARA3]", para2.value);
 				let rtfPara4 = rtfTemplate[10].replace("[PARA4]", para4.value);
 				let rtfStr = rtfTemplate[0] + "\n" + rtfTemplate[1] + "\n" + rtfTemplate[2] + "\n" + rtfTitle + "\n" + rtfTemplate[4] + "\n" + rtfIntro + "\n" + rtfPara1 + "\n" + rtfTemplate[7] + "\n" + rtfPara2 + "\n" + rtfPara3 + "\n" + rtfPara4;
-				let blob = new Blob([rtfStr]);
-				let file = new File([blob], title.value + ".rtf");
-				let dlFile = document.createElement("a");
-				dlFile.href = URL.createObjectURL(file);
-				dlFile.download = file.name;
-				dlFile.id = "downloadFileBtn";
-				document.body.append(dlFile);
-				document.getElementById("downloadFileBtn").click();
+				let rtfFileName = title.value + ".rtf";
+				
+				let confirmDownload = confirm("Would you like to save this as " + rtfFileName + "?");
+				if (confirmDownload) {
+					let blob = new Blob([rtfStr]);
+					let file = new File([blob], rtfFileName);
+					let dlFile = document.createElement("a");
+					dlFile.href = URL.createObjectURL(file);
+					dlFile.download = file.name;
+					dlFile.id = "downloadFileBtn";
+					document.body.append(dlFile);
+					document.getElementById("downloadFileBtn").click();
+				}
+				clearBtn.style.display = "inline-block";
+				clearBtn.enabled = true;
 			}
 		</script>
 	</body>
