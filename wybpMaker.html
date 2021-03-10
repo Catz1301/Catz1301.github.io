@@ -29,11 +29,55 @@
 
 		<form xmlns="http://www.w3.org/1999/xhtml" id="wybpMaker">
 			<input id="titleEdit" name="Title" style="width: 400px; margin-left: 8px; margin-bottom: 16px" required="true" type="text" value="What Ya Been Playing Week " /><br>
-			<textarea id="introEdit" rows="10" cols="250" class="paraEdit" name="Intro" placeholder="Introduction (What you played)" required="true" wrap="soft"></textarea><br>
-			<textarea id="para3Edit" rows="10" cols="250" class="paraEdit" name="Para3" placeholder="Why you played it" required="true" wrap="soft"></textarea><br>
-			<textarea id="para1Edit" rows="10" cols="250" class="paraEdit" name="Para1" placeholder="What you liked about it and why" required="true" wrap="soft"></textarea><br>
-			<textarea id="para2Edit" rows="10" cols="250" class="paraEdit" name="Para2" placeholder="What you didn't like about it and why" required="true" wrap="soft"></textarea><br>
-			<textarea id="para4Edit" rows="10" cols="250" class="paraEdit" name="Para4" placeholder="Extra" required="true" wrap="soft"></textarea><br>
+			<label class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea mdc-text-field--no-label">
+			  <span class="mdc-notched-outline">
+			    <span class="mdc-notched-outline__leading"></span>
+			    <span class="mdc-notched-outline__trailing"></span>
+			  </span>
+			  <span class="mdc-text-field__resizer">
+			    <textarea id="introEdit" rows="10" cols="250" class="mdc-text-field__input" name="Intro" placeholder="Introduction (What you played)" required="true" wrap="soft" aria-label="Label"></textarea>
+			  </span>
+			</label>
+			
+			<label class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea mdc-text-field--no-label">
+			  <span class="mdc-notched-outline">
+			    <span class="mdc-notched-outline__leading"></span>
+			    <span class="mdc-notched-outline__trailing"></span>
+			  </span>
+			  <span class="mdc-text-field__resizer">
+			    <textarea id="para3Edit" rows="10" cols="250" class="mdc-text-field__input" name="Para3" placeholder="Why you played it" required="true" wrap="soft" aria-label="Label"></textarea>
+			  </span>
+			</label>
+			
+			<label class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea mdc-text-field--no-label">
+			  <span class="mdc-notched-outline">
+			    <span class="mdc-notched-outline__leading"></span>
+			    <span class="mdc-notched-outline__trailing"></span>
+			  </span>
+			  <span class="mdc-text-field__resizer">
+			    <textarea id="para1Edit" rows="10" cols="250" class="mdc-text-field__input" name="Para1" placeholder="What you liked about it and why" required="true" wrap="soft" aria-label="Label"></textarea>
+			  </span>
+			</label>
+			
+			<label class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea mdc-text-field--no-label">
+			  <span class="mdc-notched-outline">
+			    <span class="mdc-notched-outline__leading"></span>
+			    <span class="mdc-notched-outline__trailing"></span>
+			  </span>
+			  <span class="mdc-text-field__resizer">
+			    <textarea id="para2Edit" rows="10" cols="250" class="mdc-text-field__input" name="Para2" placeholder="What you didn't like about it and why" required="true" wrap="soft" aria-label="Label"></textarea>
+			  </span>
+			</label>
+			
+			<label class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea mdc-text-field--no-label">
+			  <span class="mdc-notched-outline">
+			    <span class="mdc-notched-outline__leading"></span>
+			    <span class="mdc-notched-outline__trailing"></span>
+			  </span>
+			  <span class="mdc-text-field__resizer">
+			    <textarea id="para4Edit" rows="10" cols="250" class="mdc-text-field__input" name="Para4" placeholder="Extra" required="true" wrap="soft" aria-label="Label"></textarea>
+			  </span>
+			</label>
 			<button type="button" id="submitBtn" name="Submit">Done</button>
 			<button type="button" id="clearBtn" name="Clear" style="display: none;" disabled>Clear</button>
 		</form>
