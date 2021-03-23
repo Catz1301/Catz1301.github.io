@@ -50,14 +50,18 @@
 			<p>Paragraph 1 word count: </p>
 			<p id="para1WordCount">Uninitialized</p>
 				<span style="inline" id="para1WordCountCheck"><p>!^</p></span>
+			<br>
 			<p>Paragraph 2 word count: </p>
 			<p id="para2WordCount">Uninitialized</p>
 				<span style="inline" id="para2WordCountCheck"><p>!^</p></span>
+			<br>
 			<p>Paragraph 3 word count: </p>
 			<p id="para3WordCount">Uninitialized</p>
 				<span style="inline" id="para3WordCountCheck"><p>!^</p></span>
+			<br>
 			<p>Paragraph 4 word count: </p>
 			<p id="para4WordCount">Uninitialized</p>
+			<br>
 		</div>
 		
 
@@ -150,7 +154,7 @@
 			submit.onclick = preSubmit;
 			wybpForm.onsubmit = meow();
 			
-			Countable.on(intro, counter => updateIntroWC(counter));
+			Countable.on(intro, counter => {updateIntroWC(counter)});
 			clearBtn.onclick = clearFields;
 			function checkValues() {
 				let validValues = true;
@@ -235,6 +239,7 @@
 			}
 			
 			function updateIntroWC(counterObj) { // WC short for 'word count'
+				console.log(counterObj);
 				let wcStatus = document.getElementById('introWordCount');
 				let wordCOunt = -1;
 				if (counterObj) {
