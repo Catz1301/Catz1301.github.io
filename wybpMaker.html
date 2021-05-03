@@ -19,8 +19,19 @@
 				margin-left: 8px;
 				margin-bottom: 16px;
 			}
+            
+            #checkContainer p {
+                display: inline-block;
+                margin: 4px;
+                margin-left: 8px;
+            }
+            
+            #checkContainer p:last-child {
+                display: inline-block;
+                margin-bottom: 8px;
+            }
 			
-/* 			.checkPass {
+ 			.checkPass {
 				display: inline;
 				fill: rgb(248, 81, 73);
  				vertical-align: text-bottom;
@@ -30,7 +41,7 @@
 				display: inline;
 				fill: rgb(86, 211, 100);
  				vertical-align: text-bottom; 
-			} */
+			} 
 		</style>
 		<link href="https://catz1301.catz.gq/material-components-web.min.css" rel="stylesheet">
   		<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
@@ -38,32 +49,49 @@
 	</head>
 	<body>
 		<p>Reminder: You will need 3 paragraphs, with a recommended word count of 100-200 words per paragraph.</p>
-		<!--
+		
 		<div id="checkContainer">
 			<p>Introduction word count: </p>
 			<p id="introWordCount">Uninitialized</p>
 			<span style="inline" id="introWordCountCheck"></span>
 			<br/>
+            <p>Introduction sentence count: </p>
+			<p id="introSentenceCount">Uninitialized</p>
+			<span style="inline" id="introSentenceCountCheck"></span>
+			<br/>
 			<p>Paragraph 1 word count: </p>
 			<p id="para1WordCount">Uninitialized</p>
 			<span style="inline" id="para1WordCountCheck"></span>
+			<br/>
+            <p>Paragraph 1 sentence count: </p>
+			<p id="para1SentenceCount">Uninitialized</p>
+			<span style="inline" id="para1SentenceCountCheck"></span>
 			<br/>
 			<p>Paragraph 2 word count: </p>
 			<p id="para2WordCount">Uninitialized</p>
 			<span style="inline" id="para2WordCountCheck"></span>
 			<br/>
+            <p>Paragraph 2 sentence count: </p>
+			<p id="para2SentenceCount">Uninitialized</p>
+			<span style="inline" id="para2SentenceCountCheck"></span>
+			<br/>
 			<p>Paragraph 3 word count: </p>
 			<p id="para3WordCount">Uninitialized</p>
 			<span style="inline" id="para3WordCountCheck"></span>
+			<br/>
+            <p>Paragraph 3 sentence count: </p>
+			<p id="para3SentenceCount">Uninitialized</p>
+			<span style="inline" id="para3SentenceCountCheck"></span>
 			<br/>
 			<p>Paragraph 4 word count: </p>
 			<p id="para4WordCount">Uninitialized</p>
 			<br/>
 		</div>
-		-->
-
+		
+        <hr>
+        
 		<form xmlns="http://www.w3.org/1999/xhtml" id="wybpMaker">
-			<label class="mdc-text-field mdc-text-field--outlined" style="margin-left: 8px; margin-bottom: 16px">
+			<label class="mdc-text-field mdc-text-field--outlined" style="margin-top: 8px; margin-left: 8px; margin-bottom: 16px">
 			  <span class="mdc-notched-outline">
 			    <span class="mdc-notched-outline__leading"></span>
 			    <span class="mdc-notched-outline__notch">
@@ -137,6 +165,7 @@
 		<script>
 			var wybpForm = document.getElementById("wybpMaker");
 			var minWordCount = "/125";
+            var minSentenceCount = "/3"
 			let components = [].map.call(document.querySelectorAll('.mdc-text-field'), function(el) {
 			  return new mdc.textField.MDCTextField(el);
 			});
@@ -151,7 +180,12 @@
 			submit.onclick = preSubmit;
 			wybpForm.onsubmit = meow();
 			
-			Countable.on(intro, counter => {updateIntroWC(counter)});
+			Countable.on(intro.input_, counter => updateIntroWC(intro.input_.name.toLowerCase(), counter));
+            Countable.on(para1.input_, counter => updateIntroWC(para1.input_.name.toLowerCase(), counter));
+            Countable.on(para2.input_, counter => updateIntroWC(para2.input_.name.toLowerCase(), counter));
+            Countable.on(para3.input_, counter => updateIntroWC(para3.input_.name.toLowerCase(), counter));
+//            Countable.on(para4.input_, counter => updateIntroWC(para4.input_.name.toLowerCase(), counter));
+            
 			clearBtn.onclick = clearFields;
 			function checkValues() {
 				let validValues = true;
@@ -235,31 +269,45 @@
 				clearBtn.enabled = true;
 			}
 			
-			function updateIntroWC(counterObj) { // WC short for 'word count'
+			function updateIntroWC(elName, counterObj) { // WC short for 'word count'
 				console.log(counterObj);
-				let wcStatus = document.getElementById('introWordCount');
-				let wordCOunt = -1;
+				let wcStatus = document.getElementById(elName + 'WordCount');
+                let scStatus = document.getElementById(elName + 'SentenceCount')
+				let wordCount = -1;
+                let sentenceCount = -1;
 				if (counterObj) {
 					wcStatus.innerText = counterObj.words + minWordCount;
 					wordCount = counterObj.words;
+                    
+                    scStatus.innerText = counterObj.sentences + minSentenceCount;
+					sentenceCount = counterObj.sentences;
 				} else {
-					wcStatuc.innerText = "0" + minWordCount;
+					wcStatus.innerText = "0" + minSentenceCount;
 					wordCount = 0;
+                    
+                    scStatus.innerText = "0" + minSentenceCount;
+					sentenceCount = 0;
 				}
 				
 				if (wordCount < parseInt(minWordCount.substr(1))) {
-					setCheckResultFail(document.getElementById('introWordCountCheck'));
+					setCheckResultFail(document.getElementById(elName + 'WordCountCheck'));
 				} else {
-					setCheckResultPass(document.getElementById('introWordCountCheck'));
+					setCheckResultPass(document.getElementById(elName + 'WordCountCheck'));
+				}
+                
+                if (sentenceCount < parseInt(minSentenceCount.substr(1))) {
+					setCheckResultFail(document.getElementById(elName + 'SentenceCountCheck'));
+				} else {
+					setCheckResultPass(document.getElementById(elName + 'SentenceCountCheck'));
 				}
 			}
 			
 			function setCheckResultPass(element) {
-				element.innerHTML = '<svg viewBox="0 0 16 16" version="1.1" width="16" height="16" role="img" class="checkPass"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg>';
+				element.innerHTML = '<svg viewBox="0 0 16 16" version="1.1" width="16" height="16" role="img" class="checkPass"><path fill="#56D364" fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg>';
 			}
 			
 			function setCheckResultFail(element) {
-				element.innerHTML = '<svg class="checkFail" viewBox="0 0 16 16" version="1.1" width="16" height="16" role="img"><path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"></path></svg>';
+				element.innerHTML = '<svg class="checkFail" viewBox="0 0 16 16" version="1.1" width="16" height="16" role="img"><path fill="#F85149" fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"></path></svg>';
 			}
 		</script>
 	</body>
