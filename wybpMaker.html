@@ -118,7 +118,7 @@
 			    <span class="mdc-notched-outline__trailing"></span>
 			  </span>
 			  <span class="mdc-text-field__resizer">
-			    <textarea id="para3Edit" rows="10" cols="250" class="mdc-text-field__input" name="Para3" placeholder="Why you played it" required="true" wrap="soft" aria-label="Label"></textarea>
+			    <textarea id="para1Edit" rows="10" cols="250" class="mdc-text-field__input" name="Para1" placeholder="Why you played it" required="true" wrap="soft" aria-label="Label"></textarea>
 			  </span>
 			</label>
 			
@@ -128,7 +128,7 @@
 			    <span class="mdc-notched-outline__trailing"></span>
 			  </span>
 			  <span class="mdc-text-field__resizer">
-			    <textarea id="para1Edit" rows="10" cols="250" class="mdc-text-field__input" name="Para1" placeholder="What you liked about it and why" required="true" wrap="soft" aria-label="Label"></textarea>
+			    <textarea id="para2Edit" rows="10" cols="250" class="mdc-text-field__input" name="Para2" placeholder="What you liked about it and why" required="true" wrap="soft" aria-label="Label"></textarea>
 			  </span>
 			</label>
 			
@@ -138,7 +138,7 @@
 			    <span class="mdc-notched-outline__trailing"></span>
 			  </span>
 			  <span class="mdc-text-field__resizer">
-			    <textarea id="para2Edit" rows="10" cols="250" class="mdc-text-field__input" name="Para2" placeholder="What you didn't like about it and why" required="true" wrap="soft" aria-label="Label"></textarea>
+			    <textarea id="para3Edit" rows="10" cols="250" class="mdc-text-field__input" name="Para3" placeholder="What you didn't like about it and why" required="true" wrap="soft" aria-label="Label"></textarea>
 			  </span>
 			</label>
 			
@@ -164,7 +164,7 @@
 		
 		<script>
 			var wybpForm = document.getElementById("wybpMaker");
-			var minWordCount = "/125";
+			var minWordCount = "/50";
             var minSentenceCount = "/3"
 			let components = [].map.call(document.querySelectorAll('.mdc-text-field'), function(el) {
 			  return new mdc.textField.MDCTextField(el);
@@ -227,7 +227,6 @@
 			}
 			
 			function writeDocument(notLoading) {
-				alert("l");
 				let rtfTemplate = [
 					"{\\rtf1\\ansi\\ansicpg1252\\deff0\\nouicompat\\deflang1033{\\fonttbl{\\f0\\fnil\\fcharset0 Calibri;}}",
 					"{\\*\\generator Riched20 10.0.18362}\\viewkind4\\uc1 ",
@@ -240,18 +239,16 @@
 					"\\pard\\sa200\\sl276\\slmult1\\tx540\\tab [PARA2]\\par",
 					"\\tab [PARA3]\\par",
 					"\\tab [PARA4]\\par",
-					"\\par",
-					"[SIGNATURE]\\par",
 					"}"
 				];
 				
 				let rtfTitle = rtfTemplate[3].replace("[TITLE]", title.value);
 				let rtfIntro = rtfTemplate[5].replace("[INTRODUCTION]", intro.value);
-				let rtfPara1 = rtfTemplate[6].replace("[PARA1]", para3.value);
-				let rtfPara2 = rtfTemplate[8].replace("[PARA2]", para1.value);
-				let rtfPara3 = rtfTemplate[9].replace("[PARA3]", para2.value);
+				let rtfPara1 = rtfTemplate[6].replace("[PARA1]", para1.value);
+				let rtfPara2 = rtfTemplate[8].replace("[PARA2]", para2.value);
+				let rtfPara3 = rtfTemplate[9].replace("[PARA3]", para3.value);
 				let rtfPara4 = rtfTemplate[10].replace("[PARA4]", para4.value);
-				let rtfStr = rtfTemplate[0] + "\n" + rtfTemplate[1] + "\n" + rtfTemplate[2] + "\n" + rtfTitle + "\n" + rtfTemplate[4] + "\n" + rtfIntro + "\n" + rtfPara1 + "\n" + rtfTemplate[7] + "\n" + rtfPara2 + "\n" + rtfPara3 + "\n" + rtfPara4;
+				let rtfStr = rtfTemplate[0] + "\n" + rtfTemplate[1] + "\n" + rtfTemplate[2] + "\n" + rtfTitle + "\n" + rtfTemplate[4] + "\n" + rtfIntro + "\n" + rtfPara1 + "\n" + rtfTemplate[7] + "\n" + rtfPara2 + "\n" + rtfPara3 + "\n" + rtfPara4 + "\n" + rtfTemplate[11];
 				let rtfFileName = title.value + ".rtf";
 				
 				let confirmDownload = confirm("Would you like to save this as " + rtfFileName + "?");
